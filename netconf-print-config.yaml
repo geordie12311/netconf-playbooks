@@ -1,0 +1,16 @@
+---
+- name: Add basic netconf config to hosts
+  hosts: CSR-1
+  gather_facts: false
+
+  tasks:
+    - name: "Print Running Config"
+      ansible.netcommon.netconf_get:
+        source: running
+        display: "json"
+      register: config_output
+
+    - name: "Print the config to screen"
+      ansible.builtin.debug:
+        var: config_output["output"]
+...
