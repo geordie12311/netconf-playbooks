@@ -1,20 +1,21 @@
 ---
 # Playbook to pull data from IOSXE devices using restconf
 
-- name: Add basic netconf config to hosts
+- name: Pull the hostnames from devices using Netconf
   hosts: CSR_hosts
   gather_facts: false
-
+  connection: netconf
+  
   tasks:
-    - name: Get Hostnames
+    - name: "Task1: Get Hostnames using Netconf"
       ansible.netcommon.netconf_get:
         source: running
-        display: pretty
+        display: "json"
         filter: <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native"><hostname></hostname></native>
         lock: if-supported
       register: print_output
 
-    - name: Print output to screen
+    - name: "Task2: Print the output to screen"
       ansible.builtin.debug:
-        var: print_output
+        var: print_output["output"]
 ...

@@ -1,8 +1,9 @@
 # Playbook using Netconf to get running config from host
 ---
-- name: Add basic netconf config to hosts
+- name: Get the running configuration using Netconf
   hosts: CSR-1
   gather_facts: false
+  connection: netconf
 
   tasks:
     - name: "Print Running Config"

@@ -1,21 +1,16 @@
 # Playbook to gather serial numbers from Cisco devices using ansible-netconf
+# Playbook will save the serial numbers to a CSV file in a folder called output
 
-- name: Retrieve serial numbers from Cisco devices
+- name: Retrieve serial numbers using Netconf
   hosts: CSR_hosts
   gather_facts: false
+  connection: netconf
 
   tasks:
     - name: "Task1: Retrieve Serial Number"
       ansible.netcommon.netconf_get:
-        filter: |
-          <filter>
-            <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
-              <hardware>
-                <id></id>
-              </hardware>
-            </native>
-          </filter>
-      register: serial_number
+        filter: <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native"><hardware><id></id></hardware></native>
+      register: serial_numbers
 
     - name: "Task2: Generate Timestamp"
       ansible.builtin.command: date +"%Y-%m-%d_%H-%M-%S"
@@ -32,7 +27,7 @@
       copy:
         content: |
           Hostname,Serial Number
-          {{ inventory_hostname }},{{ serial_number.stdout_lines[0] }}
+          {{ inventory_hostname }},{{ serial_numbers.stdout_lines[0] }}
         dest: "outputs/serial_numbers_{{ timestamp.stdout }}.csv"
         mode: '0644'
 ...
