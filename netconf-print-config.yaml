@@ -1,3 +1,4 @@
+# Playbook using Netconf to get running config from host
 ---
 - name: Add basic netconf config to hosts
   hosts: CSR-1
@@ -7,10 +8,10 @@
     - name: "Print Running Config"
       ansible.netcommon.netconf_get:
         source: running
-        display: "json"
+        display: "native" #Can be displayed as xml, json, pretty(similar to xml) or native
       register: config_output
 
     - name: "Print the config to screen"
       ansible.builtin.debug:
-        var: config_output["output"]
+        var: config_output["output"] #adding ["output"] ensures only the configuration is displayed
 ...
