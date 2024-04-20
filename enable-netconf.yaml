@@ -1,7 +1,7 @@
 # Ansible playbook to add basic Netconf configuration on Cisco IOSXE devices
 ---
 - name: Add basic netconf config to hosts
-  hosts: CSR_hosts
+  hosts: lab-switches
   gather_facts: false
   connection: network_cli
 
@@ -12,9 +12,9 @@
           - ip http server
           - ip http authentication local
           - ip http secure-server
-          - ip http client source-interface GigabitEthernet1
+          - ip http client source-interface GigabitEthernet0/0
           - netconf-yang
-          - netconf-yang ssh port 830
+          - netconf ssh
         save_when: modified
       register: print_output
 

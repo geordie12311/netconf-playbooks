@@ -5,7 +5,24 @@ CSR-3
 CSR-4
 CSR-5
 CSR-6
+lab-sw1
+lab-sw2
+lab-sw3
+lab-sw4
+lab-sw5
+lab-sw6
+lab-sw7
+lab-sw8
 
+[lab-switches]
+lab-sw1
+lab-sw2
+lab-sw3
+lab-sw4
+lab-sw5
+lab-sw6
+lab-sw7
+lab-sw8
 [CSR_hosts]
 CSR-1
 CSR-2
